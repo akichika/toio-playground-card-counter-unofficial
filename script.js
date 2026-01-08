@@ -118,6 +118,11 @@ let connectedCubes = [];
 let savedLogs = [];
 let tiresRunning = false;
 let warningTimer = null;
+let wasComplete = false; // 完了音の重複再生防止フラグ
+
+// サウンドシーケンス (MIDI音階再現) 
+const SOUND_FAILURE = [60, 59, 58, 57]; // 下降音 [cite: 1]
+const SOUND_COMPLETE = [60, 62, 64, 65, 67, 72]; // 上昇音 [cite: 3]
 
 function init() {
     cardMaster = CARD_CSV.trim().split('\n').map(l => {
@@ -137,10 +142,10 @@ function updateLanguage() {
     document.getElementById('tireBtn').innerText = tiresRunning ? t.tireStop : t.tireStart;
     document.getElementById('feedbackSelect').options[0].text = t.fbOn;
     document.getElementById('feedbackSelect').options[1].text = t.fbOff;
-    document.getElementById('helpBtn').innerText = t.help;        // 「使い方 / Help」
-    document.getElementById('saveLogBtn').innerText = t.save;     // 「保存 / Save」
-    document.getElementById('clearBtn').innerText = t.clear;      // 「クリア / Clear」
-    document.getElementById('nextBoxBtn').innerText = t.next;     // 「次の箱 / Next Box」
+    document.getElementById('helpBtn').innerText = t.help;
+    document.getElementById('saveLogBtn').innerText = t.save;
+    document.getElementById('clearBtn').innerText = t.clear;
+    document.getElementById('nextBoxBtn').innerText = t.next;
     document.getElementById('ui-help-title').innerText = t.help;
     document.getElementById('ui-help-body').innerHTML = t.helpBody;
     document.getElementById('ui-sidebar-title').innerText = t.sidebarTitle;
@@ -229,6 +234,18 @@ function updateAllCardUIs() {
     allIds.forEach(id => updateSingleCardUI(id));
 }
 
+// サウンド再生の汎用関数 
+async function playToioSound(cube, notes) {
+    if (document.getElementById('feedbackSelect').value === 'off' || !cube.charSound) return;
+    const data = [0x03, 0x01, notes.length];
+    notes.forEach(note => {
+        data.push(12, note, 255); // 1音120ms
+    });
+    try {
+        await cube.charSound.writeValue(new Uint8Array(data));
+    } catch(e) { console.warn("Sound play fail", e); }
+}
+
 async function sendFeedback(cube, index) {
     if(document.getElementById('feedbackSelect').value === 'off') return;
     const note = 60 + (2 * index);
@@ -242,7 +259,6 @@ async function sendFeedback(cube, index) {
 
 function changeCount(id, delta, cube = null) {
     const currentMode = document.getElementById('modeSelect').value;
-    // 【修正】現在のモードに合致する定義を優先的に検索
     const scannedCard = cardMaster.find(c => c.id === id && c.mode === currentMode) || cardMaster.find(c => c.id === id);
     
     if (scannedCard) {
@@ -250,20 +266,26 @@ function changeCount(id, delta, cube = null) {
         document.getElementById('liveCardName').innerText = scannedCard.name;
         document.getElementById('liveId').innerText = id;
         
-        // 警告判定：ベーシックモードでアドバンス専用カードを読んだ場合のみ警告を出す
         if (currentMode === 'basic' && scannedCard.mode === 'advanced') {
             showModeWarning(i18n[document.getElementById('langSelect').value].advWarn);
         } else {
             hideModeWarning();
         }
 
-        // 【修正】カードが見つかれば、モードが一致していなくてもフィードバックを実行する
         const target = document.querySelector(`.card-item[data-id="${id}"]`);
         if(target) { 
             target.classList.add('active'); 
             setTimeout(() => target.classList.remove('active'), 200); 
         }
-        if(delta > 0 && cube) sendFeedback(cube, connectedCubes.indexOf(cube));
+
+        // 超過検知時のサウンド 
+        if(delta > 0 && cube) {
+            if (currentCounts[id] > scannedCard.exp) {
+                playToioSound(cube, SOUND_FAILURE);
+            } else {
+                sendFeedback(cube, connectedCubes.indexOf(cube));
+            }
+        }
     }
     updateSingleCardUI(id);
 }
@@ -287,12 +309,20 @@ function checkComplete() {
         if(diff > 0) missing += diff; else if(diff < 0) excess += Math.abs(diff);
     });
 
+    const isNowComplete = (missing === 0 && excess === 0 && connectedCubes.length > 0);
+    
+    // 全数揃った瞬間の通知 
+    if (isNowComplete && !wasComplete) {
+        connectedCubes.forEach(cube => playToioSound(cube, SOUND_COMPLETE));
+    }
+    wasComplete = isNowComplete;
+
     const bannerMain = document.getElementById('banner-main');
     const bannerSub = document.getElementById('banner-sub');
     const banner = document.getElementById('totalStatusBanner');
 
     if(connectedCubes.length === 0) { bannerMain.innerText = t.statusWait; bannerSub.innerText = ''; banner.className = ""; }
-    else if(missing === 0 && excess === 0) { bannerMain.innerText = t.ok; bannerSub.innerText = ''; banner.className = "status-ok"; }
+    else if(isNowComplete) { bannerMain.innerText = t.ok; bannerSub.innerText = ''; banner.className = "status-ok"; }
     else {
         if(missing > 0 && excess > 0) { bannerMain.innerText = t.ng.replace("{n}", missing); bannerSub.innerText = t.excess.replace("{n}", excess); }
         else if(missing > 0) { bannerMain.innerText = t.ng.replace("{n}", missing); bannerSub.innerText = ''; }
@@ -374,19 +404,19 @@ document.getElementById('viewSelect').addEventListener('change', renderUI);
 document.getElementById('langSelect').addEventListener('change', updateLanguage);
 document.getElementById('saveLogBtn').addEventListener('click', () => saveLog(true));
 
-// クリアボタン
 document.getElementById('clearBtn').addEventListener('click', () => { 
     const t = i18n[document.getElementById('langSelect').value];
     if(confirm(t.confirmClear)) { 
         currentCounts = {}; 
+        wasComplete = false; 
         updateAllCardUIs(); 
     } 
 });
 
-// 次の箱ボタン（ダイアログなしでリセット、連番加算）
 document.getElementById('nextBoxBtn').addEventListener('click', () => { 
     saveLog(false); 
     currentCounts = {}; 
+    wasComplete = false; 
     if (document.getElementById('autoInc').checked) {
         const serialInput = document.getElementById('boxSerial');
         serialInput.value = String(parseInt(serialInput.value) + 1).padStart(3, '0');
