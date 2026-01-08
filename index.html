@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレイグラウンド検品ツール v1.0.13</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-content" id="mainContent">
+    <div id="modeWarning">モードを選択してください</div>
+
+    <div class="top-fixed-panel">
+        <div class="top-container">
+            <div class="layout-left"><header><h2 id="ui-title">プレイグラウンド検品ツール v1.0.13</h2></header></div>
+            <div class="layout-center">
+                <div id="totalStatusBanner">
+                    <div id="banner-main">Waiting...</div>
+                    <div id="banner-sub"></div>
+                </div>
+            </div>
+            <div class="layout-right">
+                <div class="live-status">
+                    <div class="live-main">
+                        <div style="font-size: 0.6em; color: #8f8;">LAST SCAN (ID: <span id="liveId">---</span>)</div>
+                        <span class="live-card-name" id="liveCardName">---</span>
+                    </div>
+                    <div id="cubeList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="control-row">
+                <button id="helpBtn" style="background:white; color:black;">使い方</button>
+                <button id="connectBtn" class="btn-primary">toio 接続</button>
+                <button id="tireBtn" class="btn-tire">タイヤ回転</button>
+                <select id="feedbackSelect"><option value="on">音あり</option><option value="off">音なし</option></select>
+                <select id="modeSelect"><option value="basic">ベーシック</option><option value="advanced" selected>アドバンス</option></select>
+                <select id="viewSelect"><option value="grid">画像表示</option><option value="list">画像非表示</option></select>
+                <select id="langSelect"><option value="ja">Japanese</option><option value="en">English</option></select>
+                <div class="box-id-config">
+                    <input type="text" id="boxPrefix" style="width:55px;" value="TPG-A">
+                    <input type="text" id="boxSerial" value="001" style="width:35px; text-align: center;">
+                    <label style="font-size:9px;"><input type="checkbox" id="autoInc" checked> Auto++</label>
+                </div>
+                <button class="btn-save" id="saveLogBtn">保存</button>
+                <button id="clearBtn" class="btn-danger">クリア</button>
+                <input type="text" id="logCommentInput" placeholder="検品メモを入力...">
+                <button id="nextBoxBtn" style="background: var(--pg-black); color: white;">次の箱</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrollable-area">
+        <div id="displayArea"></div>
+    </div>
+
+    <footer>
+        <details>
+            <summary>▼ Credit / Trademark Notice</summary>
+            <div class="footer-content">
+                <div>
+                    Copyright 2026 Akichika Tanaka | <a href="https://opensource.org/licenses/MIT" target="_blank" style="color: var(--pg-blue);">MIT License</a> | 
+                    <a href="https://github.com/akichika/toio-playground-card-counter-unofficial" target="_blank" style="color: var(--pg-blue);">GitHub</a> |
+                    <a href="https://toio.io/playground/" target="_blank" style="color: var(--pg-blue);">toio™公式サイト</a>
+                </div>
+                <div class="trademark-notice" id="ui-trademark"></div>
+            </div>
+        </details>
+    </footer>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header"><span id="ui-sidebar-title">履歴</span><button onclick="toggleSidebar()" style="background:none; color:white; border:none; font-size:20px;">&times;</button></div>
+    <div class="sidebar-body">
+        <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+            <button onclick="exportData('csv')" class="btn-mini btn-primary">CSV</button>
+            <button onclick="exportData('json')" class="btn-mini btn-primary">JSON</button>
+            <button onclick="document.getElementById('importFile').click()" class="btn-mini" style="background:#6c757d; color:white;">Import JSON</button>
+            <input type="file" id="importFile" style="display:none" onchange="importData(event)" accept=".json">
+        </div>
+        <button id="clearAllLogsBtn" onclick="clearAllLogs()" class="btn-mini btn-danger" style="width:100%; margin-bottom:8px;">履歴をすべて削除</button>
+        <div id="logList"></div>
+    </div>
+</div>
+
+<button style="position:fixed; right:15px; bottom:15px; border-radius:50%; width:45px; height:45px; background:var(--pg-black); color:white; font-size:20px; z-index:1001; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" onclick="toggleSidebar()">📋</button>
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close-btn" onclick="closeModal()">&times;</span>
+        <h3 id="ui-help-title">使い方</h3>
+        <div id="ui-help-body"></div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
