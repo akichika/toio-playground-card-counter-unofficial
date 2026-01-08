@@ -17,7 +17,7 @@ const i18n = {
         confirmDeleteAll: "すべての履歴を完全に削除しますか？",
         confirmLoad: "カウントを上書きして読み込みますか？",
         helpBody: "0. Chrome/EdgeなどWebBluetooth対応ブラウザでこのページを開いてください。<br>1. 「toio キューブ接続」を押し接続します（複数台使用対応）。<br>2. カードにキューブが触れると自動カウントします。<br>3. 「キューブ駆動」でカードの上を走りながらカウントすることもできます。<br>4. 任意でコメントを入れ、「次の箱」でカウント履歴の保存し、カウンターをリセットします（箱番号は連番で更新）。",
-        advWarn: "アドバンスを選択してください", basicWarn: "ベーシックを選択してください",
+        advWarn: "アドバンスを選択してください", 
         modeNames: { basic: "ベーシック", advanced: "アドバンス" },
         viewNames: { grid: "画像表示", list: "画像非表示" },
         trademark: `<b>知的財産権表記 / Trademark Notice</b><br>"toio™"は、株式会社ソニー・インタラクティブエンタテインメントの登録商標または商標です。その他の商品名、サービス名、会社名またはロゴマークは、各社の商標、登録商標もしくは商号です。`
@@ -33,7 +33,7 @@ const i18n = {
         confirmDeleteAll: "Clear all history permanently?",
         confirmLoad: "Overwrite current counts and load?",
         helpBody: "0. Please open this page in a Web Bluetooth-compatible browser, such as Chrome or Edge.<br>1. Press 'Connect toio Cube' to connect your cubes (supports multiple connections).<br>2. Touching a cube to a card will automatically increment the count.<br>3. Use 'Drive Cube' to count while the cube drives over the cards.<br>4. Optionally add a comment and press 'Next Box' to save history and reset the counter (box numbers update sequentially).",
-        advWarn: "Please select Advanced mode", basicWarn: "Please select Basic mode",
+        advWarn: "Please select Advanced mode", 
         modeNames: { basic: "Basic", advanced: "Advanced" },
         viewNames: { grid: "Show Images", list: "Hide Images" },
         trademark: `<b>Trademark Notice</b><br><br>"toio™" is a trademark or registered trademark of Sony Interactive Entertainment Inc. All other product names, service names, company names or logos are trademarks, registered trademarks or trade names of their respective owners.`
@@ -137,6 +137,7 @@ function updateLanguage() {
     document.getElementById('tireBtn').innerText = tiresRunning ? t.tireStop : t.tireStart;
     document.getElementById('feedbackSelect').options[0].text = t.fbOn;
     document.getElementById('feedbackSelect').options[1].text = t.fbOff;
+    document.getElementById('helpBtn').innerText = t.help; // 【修正】使い方ボタンの翻訳反映
     document.getElementById('ui-help-title').innerText = t.help;
     document.getElementById('ui-help-body').innerHTML = t.helpBody;
     document.getElementById('ui-sidebar-title').innerText = t.sidebarTitle;
@@ -238,6 +239,7 @@ async function sendFeedback(cube, index) {
 
 function changeCount(id, delta, cube = null) {
     const currentMode = document.getElementById('modeSelect').value;
+    // 【修正】現在のモードに合致する定義を優先的に検索
     const scannedCard = cardMaster.find(c => c.id === id && c.mode === currentMode) || cardMaster.find(c => c.id === id);
     
     if (scannedCard) {
