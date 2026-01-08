@@ -121,8 +121,8 @@ let warningTimer = null;
 let wasComplete = false; // 完了音の重複再生防止フラグ
 
 // サウンドシーケンス (MIDI音階再現) 
-const SOUND_FAILURE = [60, 59, 58, 57]; // 下降音 [cite: 1]
-const SOUND_COMPLETE = [60, 62, 64, 65, 67, 72]; // 上昇音 [cite: 3]
+const SOUND_FAILURE = [36, 10, 36]; // Beep音 [cite: 1]
+const SOUND_COMPLETE = [60, 64, 67, 72]; // 上昇音 [cite: 3]
 
 function init() {
     cardMaster = CARD_CSV.trim().split('\n').map(l => {
