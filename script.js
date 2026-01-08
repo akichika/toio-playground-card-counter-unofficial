@@ -16,7 +16,7 @@ const i18n = {
         confirmClear: "カウントをすべてリセットしますか？",
         confirmDeleteAll: "すべての履歴を完全に削除しますか？",
         confirmLoad: "カウントを上書きして読み込みますか？",
-        helpBody: "0. Chrome/EdgeなどWebBluetooth対応ブラウザでこのページを開いてください。<br>1. 「toio キューブ接続」を押し接続します（複数台使用対応）。<br>2. カードにキューブが触れると自動カウントします。<br>3. 「キューブ駆動」でカードの上を走りながらカウントすることもできます。<br>4. 任意でコメントを入れ、「次の箱」でカウント履歴の保存し、カウンターをリセットします（箱番号は連番で更新）。",
+        helpBody: "0. Chrome/EdgeなどWebBluetooth対応ブラウザでこのページを開いてください。<br>1. 「toio キューブ接続」を押し接続します（複数台使用対応）。<br>2. カードにキューブが触れると自動カウントします。<br>3. 「キューブ駆動」でカードの上を走りながらカウントすることもできます。<br>4. 任意でコメントを入れ、「保存＆次へ」でカウント履歴の保存し、カウンターをリセットします（箱番号は連番で更新）。",
         advWarn: "アドバンスを選択してください", 
         modeNames: { basic: "ベーシック", advanced: "アドバンス" },
         viewNames: { grid: "画像表示", list: "画像非表示" },
@@ -121,7 +121,7 @@ let warningTimer = null;
 let wasComplete = false; // 完了音の重複再生防止フラグ
 
 // サウンドシーケンス (MIDI音階再現) 
-const SOUND_FAILURE = [36, 10, 36]; // Beep音 [cite: 1]
+const SOUND_FAILURE = [36, 12, 36]; // Beep音 [cite: 1]
 const SOUND_COMPLETE = [60, 64, 67, 72]; // 上昇音 [cite: 3]
 
 function init() {
