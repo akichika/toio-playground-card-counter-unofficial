@@ -238,27 +238,27 @@ async function sendFeedback(cube, index) {
 
 function changeCount(id, delta, cube = null) {
     const currentMode = document.getElementById('modeSelect').value;
-    currentCounts[id] = Math.max(0, (currentCounts[id] || 0) + delta);
-    
-    // 【修正】現在のモードに合致する定義を優先的に検索
     const scannedCard = cardMaster.find(c => c.id === id && c.mode === currentMode) || cardMaster.find(c => c.id === id);
     
     if (scannedCard) {
+        currentCounts[id] = Math.max(0, (currentCounts[id] || 0) + delta);
         document.getElementById('liveCardName').innerText = scannedCard.name;
         document.getElementById('liveId').innerText = id;
         
-        if (scannedCard.mode !== currentMode) { 
-            // アドバンス用カードをベーシックで読んだ時のみ警告
-            if (scannedCard.mode === 'advanced') {
-                showModeWarning(i18n[document.getElementById('langSelect').value].advWarn);
-            }
+        // 警告判定：ベーシックモードでアドバンス専用カードを読んだ場合のみ警告を出す
+        if (currentMode === 'basic' && scannedCard.mode === 'advanced') {
+            showModeWarning(i18n[document.getElementById('langSelect').value].advWarn);
         } else {
-            // モードが一致している場合、またはベーシックでベーシック用を読んだ場合
             hideModeWarning();
-            const target = document.querySelector(`.card-item[data-id="${id}"]`);
-            if(target) { target.classList.add('active'); setTimeout(() => target.classList.remove('active'), 200); }
-            if(delta > 0 && cube) sendFeedback(cube, connectedCubes.indexOf(cube));
         }
+
+        // 【修正】カードが見つかれば、モードが一致していなくてもフィードバックを実行する
+        const target = document.querySelector(`.card-item[data-id="${id}"]`);
+        if(target) { 
+            target.classList.add('active'); 
+            setTimeout(() => target.classList.remove('active'), 200); 
+        }
+        if(delta > 0 && cube) sendFeedback(cube, connectedCubes.indexOf(cube));
     }
     updateSingleCardUI(id);
 }
