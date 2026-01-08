@@ -7,7 +7,7 @@ const IMG_BASE = "img/";
 
 const i18n = {
     ja: {
-        title: "トイオ・プレイグラウンド検品ツール (非公式) v1.0.0", connect: "toio キューブ接続", add: "追加接続",
+        title: "トイオ・プレイグラウンド検品ツール for PC(非公式) v1.0.0", connect: "toio キューブ接続", add: "追加接続",
         tireStart: "タイヤ回転", tireStop: "タイヤ停止", fbOn: "音あり", fbOff: "音なし",
         save: "保存", ok: "全数OK ✅", ng: "{n}枚 不足", excess: "{n}枚 超過", statusWait: "接続待ち", 
         msgSaved: "保存完了", return1: "1枚戻す", clear: "クリア", next: "次の箱", 
@@ -16,14 +16,14 @@ const i18n = {
         confirmClear: "カウントをすべてリセットしますか？",
         confirmDeleteAll: "すべての履歴を完全に削除しますか？",
         confirmLoad: "カウントを上書きして読み込みますか？",
-        helpBody: "1. 「toio キューブ接続」を押し接続します（複数台使用対応）。<br>2. カードにキューブが触れると自動カウントします。<br>3. 「タイヤ回転」でカードの上を走りながらカウントすることもできます。<br>4. 任意でコメントを入れ、「次の箱」でカウント履歴の保存し、カウンターをリセットします（箱番号は連番で更新）。",
+        helpBody: "0. Chrome/EdgeなどWebBluetooth対応ブラウザでこのページを開いてください。<br>1. 「toio キューブ接続」を押し接続します（複数台使用対応）。<br>2. カードにキューブが触れると自動カウントします。<br>3. 「タイヤ回転」でカードの上を走りながらカウントすることもできます。<br>4. 任意でコメントを入れ、「次の箱」でカウント履歴の保存し、カウンターをリセットします（箱番号は連番で更新）。",
         advWarn: "アドバンスを選択してください", basicWarn: "ベーシックを選択してください",
         modeNames: { basic: "ベーシック", advanced: "アドバンス" },
         viewNames: { grid: "画像表示", list: "画像非表示" },
         trademark: `<b>知的財産権表記 / Trademark Notice</b><br>"toio™"は、株式会社ソニー・インタラクティブエンタテインメントの登録商標または商標です。その他の商品名、サービス名、会社名またはロゴマークは、各社の商標、登録商標もしくは商号です。`
     },
     en: {
-        title: "[Unofficial] toio PlayGround Card Counter v1.0.0", connect: "Connect toio Cube", add: "Add Cube",
+        title: "[Unofficial] toio PlayGround Card Counter for PC v1.0.0", connect: "Connect toio Cube", add: "Add Cube",
         tireStart: "Spin Tires", tireStop: "Stop Tires", fbOn: "Feedback On", fbOff: "Feedback Off",
         save: "Save", ok: "All OK ✅", ng: "{n} Short", excess: "{n} Excess", statusWait: "Waiting...", 
         msgSaved: "Saved", return1: "Return 1", clear: "Clear", next: "Next Box", 
@@ -32,7 +32,7 @@ const i18n = {
         confirmClear: "Reset all current counts?",
         confirmDeleteAll: "Clear all history permanently?",
         confirmLoad: "Overwrite current counts and load?",
-        helpBody: "1. Press 'Connect toio Cube' to connect your cubes (supports multiple connections).<br>2. Touching a cube to a card will automatically increment the count.<br>3. Use 'Spin Tires' to count while the cube drives over the cards.<br>4. Optionally add a comment and press 'Next Box' to save history and reset the counter (box numbers update sequentially).",
+        helpBody: "0. Please open this page in a Web Bluetooth-compatible browser, such as Chrome or Edge.<br>1. Press 'Connect toio Cube' to connect your cubes (supports multiple connections).<br>2. Touching a cube to a card will automatically increment the count.<br>3. Use 'Spin Tires' to count while the cube drives over the cards.<br>4. Optionally add a comment and press 'Next Box' to save history and reset the counter (box numbers update sequentially).",
         advWarn: "Please select Advanced mode", basicWarn: "Please select Basic mode",
         modeNames: { basic: "Basic", advanced: "Advanced" },
         viewNames: { grid: "Show Images", list: "Hide Images" },
