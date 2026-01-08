@@ -137,7 +137,10 @@ function updateLanguage() {
     document.getElementById('tireBtn').innerText = tiresRunning ? t.tireStop : t.tireStart;
     document.getElementById('feedbackSelect').options[0].text = t.fbOn;
     document.getElementById('feedbackSelect').options[1].text = t.fbOff;
-    document.getElementById('helpBtn').innerText = t.help; // 【修正】使い方ボタンの翻訳反映
+    document.getElementById('helpBtn').innerText = t.help;        // 「使い方 / Help」
+    document.getElementById('saveLogBtn').innerText = t.save;     // 「保存 / Save」
+    document.getElementById('clearBtn').innerText = t.clear;      // 「クリア / Clear」
+    document.getElementById('nextBoxBtn').innerText = t.next;     // 「次の箱 / Next Box」
     document.getElementById('ui-help-title').innerText = t.help;
     document.getElementById('ui-help-body').innerHTML = t.helpBody;
     document.getElementById('ui-sidebar-title').innerText = t.sidebarTitle;
