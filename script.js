@@ -237,15 +237,23 @@ async function sendFeedback(cube, index) {
 }
 
 function changeCount(id, delta, cube = null) {
-    currentCounts[id] = Math.max(0, (currentCounts[id] || 0) + delta);
-    const scannedCard = cardMaster.find(c => c.id === id);
     const currentMode = document.getElementById('modeSelect').value;
+    currentCounts[id] = Math.max(0, (currentCounts[id] || 0) + delta);
+    
+    // 【修正】現在のモードに合致する定義を優先的に検索
+    const scannedCard = cardMaster.find(c => c.id === id && c.mode === currentMode) || cardMaster.find(c => c.id === id);
+    
     if (scannedCard) {
         document.getElementById('liveCardName').innerText = scannedCard.name;
         document.getElementById('liveId').innerText = id;
+        
         if (scannedCard.mode !== currentMode) { 
-            scannedCard.mode === 'advanced' ? showModeWarning(i18n[document.getElementById('langSelect').value].advWarn) : null; 
+            // アドバンス用カードをベーシックで読んだ時のみ警告
+            if (scannedCard.mode === 'advanced') {
+                showModeWarning(i18n[document.getElementById('langSelect').value].advWarn);
+            }
         } else {
+            // モードが一致している場合、またはベーシックでベーシック用を読んだ場合
             hideModeWarning();
             const target = document.querySelector(`.card-item[data-id="${id}"]`);
             if(target) { target.classList.add('active'); setTimeout(() => target.classList.remove('active'), 200); }
