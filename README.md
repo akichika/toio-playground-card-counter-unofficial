@@ -39,11 +39,6 @@ Unofficial toio Playground Card Counter for inspecting card sets in workshops an
 - **複数キューブ接続**: 最大8台まで同時接続可能。複数人での分担検品や、両手での高速スキャンに対応。
 - **自走スキャン**: 並べたカードの上をキューブに自走（駆動）させながらの読み込みも可能。
 
-## 🔧 技術仕様
-- **Language**: JavaScript (Vanilla JS)
-- **Communication**: Web Bluetooth API (Direct Control)
-  - 外部ライブラリを使用せず、GATT通信を直接制御することで軽量・高速な動作を実現しています。
-
 ## 🚀 使い方
 1. [アプリ](https://akichika.github.io/toio-playground-card-counter-unofficial/)を開く。
 2. **「toio キューブ 接続」**ボタンからキューブをペアリング。
