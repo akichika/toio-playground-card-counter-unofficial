@@ -13,6 +13,10 @@ Unofficial toio Playground Card Counter for inspecting card sets in workshops an
 ## 💡 これは何？
 「トイオ・プレイグラウンド」シリーズに付属する大量のカード（ベーシック48枚、アドバンス96枚）を、Bluetooth接続した toio™ コア キューブでタッチするだけで効率よくカウント・検品できるWebアプリです。
 
+![20260111_082427](https://github.com/user-attachments/assets/16662be8-4552-41ca-a92f-d2d1e4dbce3f)
+
+![20260111_082632](https://github.com/user-attachments/assets/9cabfce6-bbe9-4d47-b011-d8d16567cde7)
+
 どの種類が何枚あるか覚えていなくても、タッチしていくだけで自動的に不足や超過（複数のセットが混ざった場合）を判別します。
 
 
@@ -42,9 +46,9 @@ Unofficial toio Playground Card Counter for inspecting card sets in workshops an
 
 ## 🚀 使い方
 1. [アプリ](https://akichika.github.io/toio-playground-card-counter-unofficial/)を開く。
-2. **「toio キューブ 接続」**ボタンからキューブをペアリング。
-3. 手元のカードをキューブで次々にタッチ。
-4. 全てのカードが揃うと「全数OK」が表示されます！
+2. **「toio キューブ 接続」**ボタンからキューブをペアリングします。
+3. 手元のカードをキューブで次々にタッチしていきます。
+4. 全てのカードが揃うと「全数OK」が表示されます。
 
 ---
 
