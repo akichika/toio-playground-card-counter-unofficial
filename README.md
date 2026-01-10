@@ -5,8 +5,8 @@ Unofficial toio Playground Card Counter for inspecting card sets in workshops an
 ワークショップや教室での枚数チェックに最適な、非公式のトイオ・プレイグラウンド用カード枚数検品ツール。
 
 [**👉 アプリを試してみる**](https://akichika.github.io/toio-playground-card-counter-unofficial/)
-※Web Bluetoothを使用しているため、Chrome/Edge等の対応ブラウザでアクセスしてください。
-
+※Web Bluetoothを使用しているため、Chrome/Edge等の対応ブラウザでアクセスしてください。SafariやiPhone/iPadのChromeは非対応です。
+※iOS/iPadOSの場合は [Bluefy](https://apps.apple.com/jp/app/bluefy-web-ble-browser/id1492822055) 等のWebBluetooth対応ブラウザが必要です。
 
 
 ## 💡 これは何？
