@@ -58,3 +58,5 @@ Unofficial toio Playground Card Counter for inspecting card sets in workshops an
 ---
 *Disclaimer: 本プロジェクトは個人による非公式ツールであり、株式会社ソニー・インタラクティブエンタテインメントとは関係ありません。　なお、カード画像は製品実物を写真撮影したものです。*
 
+Special thanks to M. Shoji
+
